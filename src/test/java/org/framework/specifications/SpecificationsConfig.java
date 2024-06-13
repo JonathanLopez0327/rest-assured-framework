@@ -4,6 +4,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.framework.config.TokenParams;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,10 +19,11 @@ public class SpecificationsConfig {
                 setBasePath(basePath);
     }
 
-    public RequestSpecBuilder buildRequestWithBearerToken(String baseUrl, String basePath, String token) {
+    public RequestSpecBuilder buildRequestWithBearerToken(String baseUrl, String basePath, ContentType contentType, String token) {
         return new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
                 .setBasePath(basePath)
+                .setContentType(contentType)
                 .addHeader("Authorization", "Bearer " + token);
     }
 
@@ -38,36 +40,32 @@ public class SpecificationsConfig {
         return builder;
     }
 
-    public static Map<String, String> buildRequestParams(
-            String grantType, String username,
-            String password, String clientId,
-            String clientSecret, String scope) {
-
+    public static Map<String, String> buildRequestParams(TokenParams tokenParams) {
         Map<String, String> requestParams = new HashMap<>();
 
-        if (grantType != null) {
-            requestParams.put("grant_type", grantType);
+        if (tokenParams.getGrantType() != null) {
+            requestParams.put("grant_type", tokenParams.getGrantType());
         }
-        if (username != null) {
-            requestParams.put("username", username);
+        if (tokenParams.getUsername() != null) {
+            requestParams.put("username", tokenParams.getUsername());
         }
-        if (password != null) {
-            requestParams.put("password", password);
+        if (tokenParams.getPassword() != null) {
+            requestParams.put("password", tokenParams.getPassword());
         }
-        if (clientId != null) {
-            requestParams.put("client_id", clientId);
+        if (tokenParams.getClientId() != null) {
+            requestParams.put("client_id", tokenParams.getClientId());
         }
-        if (clientSecret != null) {
-            requestParams.put("client_secret", clientSecret);
+        if (tokenParams.getClientSecret() != null) {
+            requestParams.put("client_secret", tokenParams.getClientSecret());
         }
-        if (scope != null) {
-            requestParams.put("scope", scope);
+        if (tokenParams.getScope() != null) {
+            requestParams.put("scope", tokenParams.getScope());
         }
 
         return requestParams;
     }
 
-    public String getToken(RequestSpecification requestSpec) {
+    public String generateToken(RequestSpecification requestSpec) {
         Response response = given()
                 .spec(requestSpec)
                 .when()

@@ -1,6 +1,8 @@
 package org.framework;
 
+import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
+import org.framework.config.TokenParams;
 import org.framework.specifications.SpecificationsConfig;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -14,8 +16,16 @@ public class SomeTest {
     private static RequestSpecification requestSpec;
     private static String token;
 
-    private static Map<String, String> requestParams = SpecificationsConfig.buildRequestParams(
-            "password", "dev-1", "20032718", "budget-service-client", "f0B2Ykh6wPjyhUkOtt0cfBQvXqqp3ucL", "openid profile email");
+    static TokenParams tokenParams = TokenParams.builder()
+            .grantType("password")
+            .username("dev-1")
+            .password("20032718")
+            .clientId("budget-service-client")
+            .clientSecret("f0B2Ykh6wPjyhUkOtt0cfBQvXqqp3ucL")
+            .scope("openid profile email")
+            .build();
+
+    private static Map<String, String> requestParams = SpecificationsConfig.buildRequestParams(tokenParams);
 
     @BeforeClass
     static void createRequestSpecification() {
@@ -29,10 +39,10 @@ public class SomeTest {
                 .buildRequestWithUrlEncodedParams(BASE_URL, TOKEN_PATH, requestParams)
                 .build();
 
-        token = specificationsConfig.getToken(tokenSpecifications);
+        token = specificationsConfig.generateToken(tokenSpecifications);
 
         requestSpec = specificationsConfig
-                .buildRequestWithBearerToken("http://localhost:8000", ACCOUNTS_PATH, token)
+                .buildRequestWithBearerToken("http://localhost:8000", ACCOUNTS_PATH, ContentType.JSON, token)
                 .build();
     }
 
