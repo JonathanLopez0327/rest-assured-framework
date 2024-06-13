@@ -11,14 +11,34 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
+
+/**
+ * This class provides methods to build different types of request specifications.
+ */
 public class SpecificationsConfig {
 
-    public RequestSpecBuilder buildNormalRequestSpecBuilder(String basePath) {
+    /**
+     * Builds a normal request specification with base URI and base path.
+     *
+     * @param basePath the base path of the request
+     * @return a RequestSpecBuilder instance
+     */
+    public RequestSpecBuilder buildNormalRequestSpecBuilder(String baseUrl, String basePath, ContentType contentType) {
         return new RequestSpecBuilder().
-                setBaseUri("http://localhost:8080").
-                setBasePath(basePath);
+                setBaseUri(baseUrl)
+                .setContentType(contentType)
+                .setBasePath(basePath);
     }
 
+    /**
+     * Builds a request specification with bearer token.
+     *
+     * @param baseUrl     the base URL of the request
+     * @param basePath    the base path of the request
+     * @param contentType the content type of the request
+     * @param token       the bearer token
+     * @return a RequestSpecBuilder instance
+     */
     public RequestSpecBuilder buildRequestWithBearerToken(String baseUrl, String basePath, ContentType contentType, String token) {
         return new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
@@ -27,6 +47,14 @@ public class SpecificationsConfig {
                 .addHeader("Authorization", "Bearer " + token);
     }
 
+    /**
+     * Builds a request specification with URL encoded parameters.
+     *
+     * @param baseUrl       the base URL of the request
+     * @param basePath      the base path of the request
+     * @param requestParams the request parameters
+     * @return a RequestSpecBuilder instance
+     */
     public RequestSpecBuilder buildRequestWithUrlEncodedParams(String baseUrl, String basePath, Map<String, String> requestParams) {
         RequestSpecBuilder builder = new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
@@ -40,6 +68,12 @@ public class SpecificationsConfig {
         return builder;
     }
 
+    /**
+     * Builds a map of request parameters from a TokenParams object.
+     *
+     * @param tokenParams the TokenParams object
+     * @return a map of request parameters
+     */
     public static Map<String, String> buildRequestParams(TokenParams tokenParams) {
         Map<String, String> requestParams = new HashMap<>();
 
@@ -65,6 +99,12 @@ public class SpecificationsConfig {
         return requestParams;
     }
 
+    /**
+     * Generates a token from a given request specification.
+     *
+     * @param requestSpec the request specification
+     * @return the generated token
+     */
     public String generateToken(RequestSpecification requestSpec) {
         Response response = given()
                 .spec(requestSpec)
