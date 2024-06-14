@@ -3,6 +3,7 @@ package org.framework;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import org.framework.config.TokenParams;
+import org.framework.listeners.ExtentBase;
 import org.framework.specifications.SpecificationsConfig;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-public class SomeTest {
+public class SomeTest extends ExtentBase {
 
     private static RequestSpecification requestSpec;
     private static String token;
