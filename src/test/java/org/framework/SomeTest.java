@@ -1,59 +1,52 @@
 package org.framework;
 
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.framework.config.TokenParams;
-import org.framework.listeners.ExtentBase;
-import org.framework.specifications.SpecificationsConfig;
+import org.framework.listeners.ExtentReportManager;
+import org.framework.specifications.SpecificationsUtils;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.testng.Assert.assertEquals;
 
-public class SomeTest extends ExtentBase {
+public class SomeTest {
 
-    private static RequestSpecification requestSpec;
-    private static String token;
+    private RequestSpecification requestSpec;
 
-    static TokenParams tokenParams = TokenParams.builder()
+    TokenParams tokenParams = TokenParams.builder()
             .grantType("password")
             .username("dev-1")
             .password("20032718")
             .clientId("budget-service-client")
             .clientSecret("f0B2Ykh6wPjyhUkOtt0cfBQvXqqp3ucL")
-            .scope("openid profile email")
+            .scope("openid email profile")
             .build();
 
-    private static Map<String, String> requestParams = SpecificationsConfig.buildRequestParams(tokenParams);
+    private Map<String, String> requestParams = SpecificationsUtils.buildRequestParams(tokenParams);
 
-    @BeforeClass
-    static void createRequestSpecification() {
-        final String BASE_URL = "http://localhost:8080";
-        final String TOKEN_PATH = "/realms/dev-budget-realm/protocol/openid-connect/token";
-        final String ACCOUNTS_PATH = "/account";
-
-        SpecificationsConfig specificationsConfig = new SpecificationsConfig();
-
-        RequestSpecification tokenSpecifications = specificationsConfig
-                .buildRequestWithUrlEncodedParams(BASE_URL, TOKEN_PATH, requestParams)
-                .build();
-
-        token = specificationsConfig.generateToken(tokenSpecifications);
-
-        requestSpec = specificationsConfig
-                .buildRequestWithBearerToken("http://localhost:8000", ACCOUNTS_PATH, ContentType.JSON, token)
-                .build();
+    @BeforeMethod
+    void createRequestSpec() {
+        requestSpec = SpecificationsUtils
+                .buildRequestWithUrlEncodedParams("http://localhost:8080", "/realms/dev-budget-realm/protocol/openid-connect/token", requestParams).build();
     }
 
     @Test
-    void request_to_get_token() {
-        given()
+    void generate_token_test() {
+        Response response = given()
                 .spec(requestSpec)
+                .contentType(ContentType.URLENC)
                 .when()
-                .get()
-                .then()
-                .statusCode(200);
+                .post();
+
+        SpecificationsUtils.printRequestLogInReport(requestSpec);
+        SpecificationsUtils.printResponseLogInReport(response);
+
+        assertEquals(response.getStatusCode(), 200, "Expected response code is 200");
     }
 }
