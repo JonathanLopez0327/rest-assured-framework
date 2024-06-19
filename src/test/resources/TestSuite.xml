@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Suite">
+<suite name="My Suite">
     <listeners>
-        <listener class-name="org.framework.listeners.ExtentListeners" />
+        <listener class-name="org.framework.report.ExtentListener" />
     </listeners>
-    <test name="Test">
-        <parameter name="browser" value="NONE" /> <!-- Valor del navegador -->
+    <test name="My Test 1">
         <classes>
-            <class name="org.framework.SomeTest" />
+            <class name="org.framework.testing.TestingMyFramework">
+                <methods>
+                    <include name="add_new_account" />
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>

@@ -1,12 +1,13 @@
-package org.framework.listeners;
+package org.framework.report;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.Markup;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-
-import java.util.Arrays;
 
 public class ExtentListener implements ITestListener {
 
@@ -24,16 +25,15 @@ public class ExtentListener implements ITestListener {
                 .createTest("Test case " + result.getTestClass().getName() + " :: " + result.getMethod().getMethodName());
         extentTest.set(test);
     }
+    public void onTestSuccess(ITestResult result) {
+        String methodName = result.getMethod().getMethodName();
+        String logText = "<b>" + "TEST CASE:- " + methodName.toUpperCase() + " - PASSED" + "</b>";
+        Markup markup = MarkupHelper.createLabel(logText, ExtentColor.GREEN);
+        extentTest.get().pass(markup);
+    }
 
     public void onTestFailure(ITestResult result) {
         ExtentReportManager.logFailureDetails(result.getThrowable().getMessage());
-        String stackTrace = Arrays.toString(result.getThrowable().getStackTrace());
-        stackTrace = stackTrace.replaceAll(",", "<br>");
-        String formmatedTrace = "<details>\n" +
-                "    <summary>Click Here To See Exception Logs</summary>\n" +
-                "    " + stackTrace + "\n" +
-                "</details>\n";
-        ExtentReportManager.logExceptionDetails(formmatedTrace);
     }
 
     public void onFinish(ITestContext context) {
