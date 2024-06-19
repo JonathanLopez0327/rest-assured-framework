@@ -1,4 +1,4 @@
-package org.framework.listeners;
+package org.framework.report;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.markuputils.CodeLanguage;
@@ -22,6 +22,7 @@ public class ExtentReportManager {
         sparkReporter.config().setDocumentTitle(documentTitle);
         sparkReporter.config().setEncoding("utf-8");
         sparkReporter.config().setReportName(reportName);
+        sparkReporter.config().setCss("#uniqueValue {color: #6495ED;}");
 
         extentReports = new ExtentReports();
         extentReports.attachReporter(sparkReporter);
@@ -53,7 +54,7 @@ public class ExtentReportManager {
     }
 
     public static void logInfoDetails(String log) {
-        ExtentListener.extentTest.get().info(MarkupHelper.createLabel(log, ExtentColor.GREY));
+        ExtentListener.extentTest.get().info(log);
     }
 
     public static void logWarningDetails(String log) {
@@ -63,10 +64,11 @@ public class ExtentReportManager {
     public static void logJson(String json) {
         ExtentListener.extentTest.get().info(MarkupHelper.createCodeBlock(json, CodeLanguage.JSON));
     }
-    public static void logHeaders(List<Header> headersList) {
 
-        String[][] arrayHeaders = headersList.stream().map(header -> new String[] {header.getName(), header.getValue()})
-                .toArray(String[][] :: new);
+    public static void logHeaders(List<Header> headersList) {
+        String[][] arrayHeaders = headersList.stream()
+                .map(header -> new String[] {"<span id='uniqueName'>" + header.getName() + "</span>", "<span id='uniqueValue'>" + header.getValue() + "</span>"})
+                .toArray(String[][]::new);
         ExtentListener.extentTest.get().info(MarkupHelper.createTable(arrayHeaders));
     }
 }

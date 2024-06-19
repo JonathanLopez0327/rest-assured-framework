@@ -11,7 +11,7 @@
 <link href="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@ce8b10435bcbae260c334c0d0c6b61d2c19b6168/spark/css/spark-style.css" rel="stylesheet" />
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@7cc78ce/spark/js/jsontree.js"></script>
-<style type="text/css"></style></head><body class="spa -report dark">
+<style type="text/css">#uniqueValue {color: #6495ED;}</style></head><body class="spa -report dark">
   <div class="app">
     <div class="layout">
 <div class="header navbar">
@@ -35,7 +35,7 @@
 <a href="#"><span class="badge badge-primary">Name</span></a>
 </li>
 <li class="m-r-10">
-<a href="#"><span class="badge badge-primary">Jun 17, 2024 03:15:42 PM</span></a>
+<a href="#"><span class="badge badge-primary">Jun 19, 2024 12:00:02 AM</span></a>
 </li>
 </ul>
 </div>
@@ -66,7 +66,7 @@
 <li class="dropdown">
 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-exclamation-circle"></i></a>
 <ul id="status-toggle" class="dropdown-menu dropdown-md p-v-0">
-<a class="dropdown-item" status="fail" href="#"><span>Fail</span><span class="status danger"></span></a>
+<a class="dropdown-item" status="pass" href="#"><span>Pass</span><span class="status success"></span></a>
 <div class="dropdown-divider"></div>
 <a status="clear" class="dropdown-item" href="#"><span>Clear</span><span class="pull-right"><i class="fa fa-close"></i></span></a>
 </ul>
@@ -74,25 +74,25 @@
 </ul>
 </div>    <div class="test-list-wrapper scrollable">
       <ul class="test-list-item">
-        <li class="test-item"  status="fail" test-id="1"
+        <li class="test-item"  status="pass" test-id="1"
           author=""
           tag=""
           device="">
           <div class="test-detail">
-            <p class="name">Test case org.framework.SomeTest :: generate_token_test</p>
+            <p class="name">Test case org.framework.testing.TestingMyFramework :: add_new_account</p>
             <p class="text-sm">
-              <span>3:15:42 PM</span> / <span>00:00:00:626</span>
-              <span class="badge fail-bg log float-right">Fail</span>
+              <span>12:00:03 AM</span> / <span>00:00:00:201</span>
+              <span class="badge pass-bg log float-right">Pass</span>
             </p>
           </div>
           <div class="test-contents d-none">
 <div class="detail-head">
 <div class="p-v-10">
 <div class="info">
-<h5 class="test-status text-fail">Test case org.framework.SomeTest :: generate_token_test</h5>
-<span class='badge badge-success'>06.17.2024 3:15:42 PM</span>
-<span class='badge badge-danger'>06.17.2024 3:15:43 PM</span>
-<span class='badge badge-default'>00:00:00:626</span>
+<h5 class="test-status text-pass">Test case org.framework.testing.TestingMyFramework :: add_new_account</h5>
+<span class='badge badge-success'>06.19.2024 12:00:03 AM</span>
+<span class='badge badge-danger'>06.19.2024 12:00:03 AM</span>
+<span class='badge badge-default'>00:00:00:201</span>
 &middot; <span class='uri-anchor badge badge-default'>#test-id=1</span>
 <span title='Skip to the next failed step' class='badge badge-danger pointer float-right ne ml-1'><i class="fa fa-fast-forward"></i></span>
 <span title='Collapse all nodes' class='badge badge-default pointer float-right ct ml-1'><i class="fa fa-compress"></i></span>
@@ -105,85 +105,75 @@
   <tbody>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
+        <td>12:00:03 AM</td>
         <td>
-          <span class='badge white-text grey'>Endpoint is http://localhost:8080</span>
+          Endpoint is: <span id='uniqueValue'>http://localhost:8000/account</span>
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
+        <td>12:00:03 AM</td>
         <td>
-          <span class='badge white-text grey'>Method is null</span>
+          Method is: <span id='uniqueValue'>POST</span>
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
+        <td>12:00:03 AM</td>
         <td>
-          <span class='badge white-text grey'>Headers are </span>
+          Request Headers: <br><span id='uniqueName'>Authorization</span>: <span id='uniqueValue'>Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhX2FpS0ZDNnQ2ZWNUUGktYUx6VWFyY21OTkFzelJlY0lpUnVqYjF4REVRIn0.eyJleHAiOjE3MTg3Njk5MDMsImlhdCI6MTcxODc2OTYwMywianRpIjoiYjkyZDNmMWEtZmEyNi00MWI4LWE1OTAtNjBkMmM4N2FkYTNiIiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9kZXYtYnVkZ2V0LXJlYWxtIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6ImMyNjFjYTljLWI2ZmMtNGRjOS04Nzc1LTA5ODk3OGMzMmUyYSIsInR5cCI6IkJlYXJlciIsImF6cCI6ImJ1ZGdldC1zZXJ2aWNlLWNsaWVudCIsInNlc3Npb25fc3RhdGUiOiI4NzQ1MmRjNS04MWMyLTRhYWUtOTY2My01MDVhYmVmODg5ZDUiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbIiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsib2ZmbGluZV9hY2Nlc3MiLCJidWRnZXQtdXNlcnMiLCJkZWZhdWx0LXJvbGVzLWRldi1idWRnZXQiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiI4NzQ1MmRjNS04MWMyLTRhYWUtOTY2My01MDVhYmVmODg5ZDUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6ImRldiBvbmUiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkZXYtMSIsImdpdmVuX25hbWUiOiJkZXYiLCJmYW1pbHlfbmFtZSI6Im9uZSIsImVtYWlsIjoiZGV2ZWxvcGVyQHBydWViYS5jb20uZG8ifQ.ZL6bVJoixQCNRKctxeqeIIQMoy6vuO-98efzvhsupzC7RFnR0k7p_Jq9cj--9y4l9CYl0_Yv3o0wc5hs6QElX15PtzTHWzq_d7TmWRbzOTyE_kYlmJOzsn5gcqiZJBeIvg4IYpo8isPZopvWnoFTFRCqmMsPFMe9sKvJc3AGTeePt8ToNjwvzT8Tdzwte6yoBHTwN1q62DjhgSUUAHaVDQWDt3mi5wkAZ2fnUEws2cwodvrP5l8qcKhCmgy-fxvSnjCbDtd8OX6quZ7CcsZGqJ-CyXAFXHtEuk1mfFBnO0CVFDlBK5xUGbYCkHn8g4Gk-g82IaUrLj6Gwy72_JekRQ</span><br><span id='uniqueName'>Accept</span>: <span id='uniqueValue'>*/*</span><br><span id='uniqueName'>Content-Type</span>: <span id='uniqueValue'>application/json</span><br>
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
+        <td>12:00:03 AM</td>
         <td>
-          <table class='markup-table table '><tr><td>Content-Type</td><td>application/x-www-form-urlencoded</td></tr></table>
+          Request body is: 
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
+        <td>12:00:03 AM</td>
         <td>
-          <span class='badge white-text grey'>Request body is </span>
+           <div class='json-tree' id='code-block-json-0'></div>
+ <script>
+  function jsonTreeCreate0() { 
+   document.getElementById('code-block-json-0').innerHTML = JSONTree.create({"accountType":"CASH","accountName":"Test Account 2","accountDescription":"Test Description 2","totalAmount":"1000"}); 
+  }
+  jsonTreeCreate0();
+ </script>
+
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
+        <td>12:00:03 AM</td>
         <td>
-          
+          Response status is: 201
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
+        <td>12:00:03 AM</td>
         <td>
-          <span class='badge white-text grey'>Response status is 400</span>
+          Response Headers: <br><span id='uniqueName'>Vary</span>: <span id='uniqueValue'>Origin</span><br><span id='uniqueName'>Vary</span>: <span id='uniqueValue'>Access-Control-Request-Method</span><br><span id='uniqueName'>Vary</span>: <span id='uniqueValue'>Access-Control-Request-Headers</span><br><span id='uniqueName'>X-Content-Type-Options</span>: <span id='uniqueValue'>nosniff</span><br><span id='uniqueName'>X-XSS-Protection</span>: <span id='uniqueValue'>0</span><br><span id='uniqueName'>Cache-Control</span>: <span id='uniqueValue'>no-cache, no-store, max-age=0, must-revalidate</span><br><span id='uniqueName'>Pragma</span>: <span id='uniqueValue'>no-cache</span><br><span id='uniqueName'>Expires</span>: <span id='uniqueValue'>0</span><br><span id='uniqueName'>X-Frame-Options</span>: <span id='uniqueValue'>DENY</span><br><span id='uniqueName'>Content-Type</span>: <span id='uniqueValue'>application/json</span><br><span id='uniqueName'>Transfer-Encoding</span>: <span id='uniqueValue'>chunked</span><br><span id='uniqueName'>Date</span>: <span id='uniqueValue'>Wed, 19 Jun 2024 04:00:03 GMT</span><br><span id='uniqueName'>Keep-Alive</span>: <span id='uniqueValue'>timeout=60</span><br><span id='uniqueName'>Connection</span>: <span id='uniqueValue'>keep-alive</span><br>
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
+        <td>12:00:03 AM</td>
         <td>
-          <span class='badge white-text grey'>Response Headers are </span>
+          Response body is: 
         </td>
       </tr>
       <tr class="event-row">
         <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
-        <td>
-          <table class='markup-table table '><tr><td>Cache-Control</td><td>no-store</td></tr><tr><td>Pragma</td><td>no-cache</td></tr><tr><td>content-length</td><td>70</td></tr><tr><td>Content-Type</td><td>application/json</td></tr><tr><td>Referrer-Policy</td><td>no-referrer</td></tr><tr><td>Strict-Transport-Security</td><td>max-age=31536000; includeSubDomains</td></tr><tr><td>X-Content-Type-Options</td><td>nosniff</td></tr><tr><td>X-Frame-Options</td><td>SAMEORIGIN</td></tr><tr><td>X-XSS-Protection</td><td>1; mode=block</td></tr></table>
-        </td>
-      </tr>
-      <tr class="event-row">
-        <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
-        <td>
-          <span class='badge white-text grey'>Response body is </span>
-        </td>
-      </tr>
-      <tr class="event-row">
-        <td><span class="badge log info-bg">Info</span></td>
-        <td>3:15:43 PM</td>
+        <td>12:00:03 AM</td>
         <td>
            <div class='json-tree' id='code-block-json-1'></div>
  <script>
   function jsonTreeCreate1() { 
-   document.getElementById('code-block-json-1').innerHTML = JSONTree.create({
-    "error": "invalid_request",
-    "error_description": "duplicated parameter"
-}); 
+   document.getElementById('code-block-json-1').innerHTML = JSONTree.create(3); 
   }
   jsonTreeCreate1();
  </script>
@@ -191,21 +181,10 @@
         </td>
       </tr>
       <tr class="event-row">
-        <td><span class="badge log fail-bg">Fail</span></td>
-        <td>3:15:43 PM</td>
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>12:00:03 AM</td>
         <td>
-          <span class='badge white-text red'>Expected response code is 200 expected [200] but found [400]</span>
-        </td>
-      </tr>
-      <tr class="event-row">
-        <td><span class="badge log fail-bg">Fail</span></td>
-        <td>3:15:43 PM</td>
-        <td>
-          <details>
-    <summary>Click Here To See Exception Logs</summary>
-    [org.testng.Assert.fail(Assert.java:111)<br> org.testng.Assert.failNotEquals(Assert.java:1578)<br> org.testng.Assert.assertEqualsImpl(Assert.java:150)<br> org.testng.Assert.assertEquals(Assert.java:132)<br> org.testng.Assert.assertEquals(Assert.java:1419)<br> org.testng.Assert.assertEquals(Assert.java:1383)<br> org.framework.SomeTest.generate_token_test(SomeTest.java:51)<br> java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)<br> java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)<br> java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)<br> java.base/java.lang.reflect.Method.invoke(Method.java:566)<br> org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)<br> org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:686)<br> org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)<br> org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)<br> org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:992)<br> org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)<br> org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)<br> org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)<br> java.base/java.util.ArrayList.forEach(ArrayList.java:1541)<br> org.testng.TestRunner.privateRun(TestRunner.java:739)<br> org.testng.TestRunner.run(TestRunner.java:614)<br> org.testng.SuiteRunner.runTest(SuiteRunner.java:421)<br> org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)<br> org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)<br> org.testng.SuiteRunner.run(SuiteRunner.java:312)<br> org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)<br> org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)<br> org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)<br> org.testng.TestNG.runSuitesLocally(TestNG.java:1208)<br> org.testng.TestNG.runSuites(TestNG.java:1112)<br> org.testng.TestNG.run(TestNG.java:1079)<br> com.intellij.rt.testng.IDEARemoteTestNG.run(IDEARemoteTestNG.java:65)<br> com.intellij.rt.testng.RemoteTestNGStarter.main(RemoteTestNGStarter.java:105)]
-</details>
-
+          <span class='badge white-text green'><b>TEST CASE:- ADD_NEW_ACCOUNT - PASSED</b></span>
         </td>
       </tr>
   </tbody>
@@ -227,25 +206,25 @@
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0">Started</p>
-<h3>Jun 17, 2024 03:15:42 PM</h3>
+<h3>Jun 19, 2024 12:00:02 AM</h3>
 </div></div>
 </div>
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0">Ended</p>
-<h3>Jun 17, 2024 03:15:43 PM</h3>
+<h3>Jun 19, 2024 12:00:03 AM</h3>
 </div></div>
 </div>
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0 text-pass">Tests Passed</p>
-<h3>0</h3>
+<h3>1</h3>
 </div></div>
 </div>
 <div class="col-md-3">
 <div class="card"><div class="card-body">
 <p class="m-b-0 text-fail">Tests Failed</p>
-<h3>1</h3>
+<h3>0</h3>
 </div></div>
 </div>
 </div>
@@ -261,12 +240,12 @@
 </div>
 </div>
 <div class="card-footer">
-<div><small data-tooltip='0%'>
-<b>0</b> tests passed
+<div><small data-tooltip='100%'>
+<b>1</b> tests passed
 </small>
 </div>
 <div>
-<small data-tooltip='100%'><b>1</b> tests failed,
+<small data-tooltip='0%'><b>0</b> tests failed,
 <b>0</b> skipped, <b data-tooltip='0%'>0</b> others
 </small>
 </div>
@@ -284,10 +263,10 @@
 </div>
 </div>
 <div class="card-footer">
-<div><small data-tooltip='0%'><b>0</b> events passed</small></div>
+<div><small data-tooltip='10%'><b>1</b> events passed</small></div>
 <div>
-<small data-tooltip='15%'><b>2</b> events failed,
-<b data-tooltip='%'>11</b> others
+<small data-tooltip='0%'><b>0</b> events failed,
+<b data-tooltip='%'>9</b> others
 </small>
 </div>
 </div>
@@ -303,7 +282,7 @@
 </div></div>
 <script>
 var timeline = {
-"Test case org.framework.SomeTest :: generate_token_test":0.626
+"Test case org.framework.testing.TestingMyFramework :: add_new_account":0.201
 };
 </script>
 <div class="row">
@@ -334,8 +313,8 @@ var timeline = {
 <script>
 var statusGroup = {
 parentCount: 5,
-passParent: 0,
-failParent: 1,
+passParent: 1,
+failParent: 0,
 warningParent: 0,
 skipParent: 0,
 childCount: 5,
@@ -351,11 +330,11 @@ warningGrandChild: 0,
 skipGrandChild: 0,
 infoGrandChild: 0,
 eventsCount: 5,
-passEvents: 0,
-failEvents: 2,
+passEvents: 1,
+failEvents: 0,
 warningEvents: 0,
 skipEvents: 0,
-infoEvents: 11
+infoEvents: 9
 };
 </script>        </div>
       </div>
