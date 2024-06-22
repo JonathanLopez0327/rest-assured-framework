@@ -1,5 +1,6 @@
 package org.framework.specifications;
 
+import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -7,8 +8,11 @@ import io.restassured.specification.QueryableRequestSpecification;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.SpecificationQuerier;
 import org.framework.report.ExtentReportManager;
+import org.framework.utils.Protocols;
 
 import java.util.Map;
+import java.util.Optional;
+
 import static io.restassured.RestAssured.given;
 
 /**
@@ -16,70 +20,60 @@ import static io.restassured.RestAssured.given;
  */
 public class SpecificationsUtils {
 
-    public static RequestSpecification buildRequestWithHeaders(String baseUrl, String basePath, ContentType contentType, Map<String, String> headers) {
-        return given()
-                .baseUri(baseUrl)
-                .basePath(basePath)
-                .contentType(contentType)
-                .headers(headers);
-    }
-
-    public static RequestSpecification buildRequestAddingUrlEncodedParams(String baseUrl, String basePath, Map<String, String> requestParams) {
-        return given()
-                .baseUri(baseUrl)
-                .basePath(basePath)
+    public static Response generateAuthToken(String clientId, String clientSecret, String endpoint, Map<String, String> formParams) {
+        return RestAssured.given()
+                .auth()
+                .preemptive()
+                .basic(clientId, clientSecret)
                 .contentType(ContentType.URLENC)
-                .formParams(requestParams);
+                .formParams(formParams)
+                .post(endpoint);
     }
 
-    public static RequestSpecification buildRequestAddingJsonBody(String baseUrl, String basePath, ContentType contentType, Map<String, String> headers, Map<String, String> jsonBody) {
-        return given()
-                .baseUri(baseUrl)
-                .basePath(basePath)
-                .contentType(contentType)
-                .headers(headers)
-                .body(jsonBody);
-    }
-
-    public static RequestSpecBuilder buildRequestAddingQueryParameters(String baseUrl, String basePath, ContentType contentType, Map<String, String> headers, Map<String, String> queryParams, Map<String, String> bodyParams) {
+    private static RequestSpecBuilder createRequestSpecBuilder(String baseUrl, String basePath, ContentType contentType, Map<String, String> headers) {
         return new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
                 .setBasePath(basePath)
                 .setContentType(contentType)
-                .addHeaders(headers)
-                .addQueryParams(queryParams)
-                .setBody(bodyParams);
+                .addHeaders(headers);
     }
 
-    public static void printRequestLogInReport(RequestSpecification requestSpecification) {
-        QueryableRequestSpecification queryableRequestSpecification = SpecificationQuerier.query(requestSpecification);
-        ExtentReportManager.logInfoDetails("Endpoint is: " + "<span id='uniqueValue'>" + queryableRequestSpecification.getBaseUri() + queryableRequestSpecification.getBasePath() + "</span>");
-        ExtentReportManager.logInfoDetails("Method is: " + "<span id='uniqueValue'>" + queryableRequestSpecification.getMethod()+ "</span>");
+    public static RequestSpecification buildRequest(String baseUrl, String basePath, ContentType contentType, Map<String, String> headers, Map<String, String> bodyParams, Map<String, String> queryParams, ContentType bodyContentType) {
+        RequestSpecBuilder builder = createRequestSpecBuilder(baseUrl, basePath, contentType, headers);
 
-        StringBuilder headersInfo = new StringBuilder("Request Headers: <br>");
-        queryableRequestSpecification.getHeaders().asList().forEach(header -> {
-            headersInfo.append("<span id='uniqueName'>").append(header.getName()).append("</span>: <span id='uniqueValue'>").append(header.getValue()).append("</span><br>");
-        });
-        ExtentReportManager.logInfoDetails(headersInfo.toString());
+        Optional.ofNullable(bodyParams).ifPresent(params -> builder.setBody(params).setContentType(bodyContentType));
+        Optional.ofNullable(queryParams).ifPresent(builder::addQueryParams);
 
-        if (queryableRequestSpecification.getBody() != null) {
-            ExtentReportManager.logInfoDetails("Request body is: ");
-            ExtentReportManager.logJson(queryableRequestSpecification.getBody());
-        }
+        return given().spec(builder.build());
     }
 
-    public static void printResponseLogInReport(Response response) {
-        ExtentReportManager.logInfoDetails("Response status is: " + response.getStatusCode());
+    public static RequestSpecification buildSecureRequest(String accessToken, String baseUrl, String basePath, ContentType contentType, Map<String, String> headers, Map<String, String> bodyParams, Map<String, String> queryParams, ContentType bodyContentType) {
+        RequestSpecBuilder builder = createRequestSpecBuilder(baseUrl, basePath, contentType, headers);
 
-        StringBuilder headersInfo = new StringBuilder("Response Headers: <br>");
-        response.getHeaders().asList().forEach(header -> {
-            headersInfo.append("<span id='uniqueName'>").append(header.getName()).append("</span>: <span id='uniqueValue'>").append(header.getValue()).append("</span><br>");
-        });
-        ExtentReportManager.logInfoDetails(headersInfo.toString());
+        Optional.ofNullable(bodyParams).ifPresent(params -> builder.setBody(params).setContentType(bodyContentType));
+        Optional.ofNullable(queryParams).ifPresent(builder::addQueryParams);
 
-        ExtentReportManager.logInfoDetails("Response body is: ");
-        ExtentReportManager.logJson(response.getBody().prettyPrint());
+        return given().auth().oauth2(accessToken).spec(builder.build());
     }
 
+    public static RequestSpecification buildRequestWithRelaxedHttpsValidation(String baseUrl, String basePath, ContentType contentType, Map<String, String> headers, Map<String, String> bodyParams, Map<String, String> queryParams, ContentType bodyContentType, Protocols protocol) {
+        RequestSpecBuilder builder = createRequestSpecBuilder(baseUrl, basePath, contentType, headers);
 
+        Optional.ofNullable(bodyParams).ifPresent(params -> builder.setBody(params).setContentType(bodyContentType));
+        Optional.ofNullable(queryParams).ifPresent(builder::addQueryParams);
+
+        return given().relaxedHTTPSValidation(protocol.toString()).spec(builder.build());
+    }
+
+    public static RequestSpecification buildRequest(String baseUrl, String basePath, ContentType contentType, Map<String, String> headers, Map<String, String> bodyParams) {
+        return buildRequest(baseUrl, basePath, contentType, headers, bodyParams, null, null);
+    }
+
+    public static RequestSpecification buildRequest(String baseUrl, String basePath, ContentType contentType, Map<String, String> headers) {
+        return buildRequest(baseUrl, basePath, contentType, headers, null, null, null);
+    }
+
+    public static RequestSpecification buildRequest(String baseUrl, String basePath, Map<String, String> requestParams) {
+        return buildRequest(baseUrl, basePath, ContentType.URLENC, null, requestParams, null, null);
+    }
 }

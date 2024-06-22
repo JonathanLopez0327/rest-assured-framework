@@ -6,13 +6,8 @@ import io.restassured.specification.RequestSpecification;
 import org.framework.specifications.SpecificationsUtils;
 import org.framework.testing.config.AccountParams;
 import org.framework.testing.config.Builders;
-import org.framework.testing.config.TokenParams;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.Map;
-
-import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 
 public class TestingMyFramework {
@@ -22,7 +17,7 @@ public class TestingMyFramework {
     @BeforeMethod
     static void generate_token() {
         Response response = SpecificationsUtils
-                .buildRequestAddingUrlEncodedParams("http://localhost:8080", "/realms/dev-budget-realm/protocol/openid-connect/token", Builders.tokenParams())
+                .buildRequest("http://localhost:8080", "/realms/dev-budget-realm/protocol/openid-connect/token", Builders.tokenParams())
                 .post();
         token = response.jsonPath().getString("access_token");
     }
@@ -30,7 +25,7 @@ public class TestingMyFramework {
     @Test(description = "Get all accounts")
     void get_all_accounts() {
         requestSpecification = SpecificationsUtils
-                .buildRequestWithHeaders("http://localhost:8000", "/account", ContentType.JSON, Builders.headers(token));
+                .buildRequest("http://localhost:8000", "/account", ContentType.JSON, Builders.headers(token));
         Response response = requestSpecification.get();
         SpecificationsUtils.printRequestLogInReport(requestSpecification);
         SpecificationsUtils.printResponseLogInReport(response);
@@ -44,7 +39,7 @@ public class TestingMyFramework {
 
         requestSpecification =
                 SpecificationsUtils
-                        .buildRequestAddingJsonBody("http://localhost:8000", "/account", ContentType.JSON, Builders.headers(token), Builders.accountParams(accountParams));
+                        .buildRequest("http://localhost:8000", "/account", ContentType.JSON, Builders.headers(token), Builders.accountParams(accountParams));
 
         Response response = requestSpecification.post();
 
