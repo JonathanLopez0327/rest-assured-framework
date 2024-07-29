@@ -4,11 +4,17 @@
     <listeners>
         <listener class-name="org.framework.report.ExtentListener" />
     </listeners>
-    <test name="My Test 1">
+<!--    <test name="Generate Token">-->
+<!--        <classes>-->
+<!--            <class name="org.framework.trackingservice.security.GenerateTokenTest" />-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <test name="Generate Token">
         <classes>
-            <class name="org.framework.testing.TestingMyFramework">
+            <class name="org.framework.trackingservice.accounts.AccountServiceTest">
                 <methods>
-                    <include name="add_new_account" />
+                    <include name="delete_account" />
                 </methods>
             </class>
         </classes>
