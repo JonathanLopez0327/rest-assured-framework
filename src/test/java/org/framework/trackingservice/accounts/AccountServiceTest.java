@@ -10,9 +10,12 @@ import org.framework.utils.Token;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.Matchers.hasItems;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class AccountServiceTest {
     private static String token;
@@ -51,11 +54,21 @@ public class AccountServiceTest {
         requestSpecification = SpecificationsUtils
                 .buildSecureRequest(token,"http://localhost:8000", "/account", ContentType.JSON, null, null);
 
-        Response response = requestSpecification.get();
+        response = requestSpecification.get();
 
         LogginReport.printRequestLogInReport(requestSpecification);
         LogginReport.printResponseLogInReport(response);
-        assertEquals(response.getStatusCode(), 200, "Expected status code is 200.");
+
+        //assertEquals(response.getStatusCode(), 200, "Expected status code is 200.");
+
+        response.then().assertThat().statusCode(200);
+
+
+//        List<String> accountNames = response.jsonPath().getList("accountName");
+//        boolean containsBPD = accountNames.stream().anyMatch(name -> name.equals("BPD"));
+//        assertTrue(containsBPD, "Expected at least one account name to be BPD.");
+
+        response.then().body("accountName", hasItems("BPD", "Test Account"));
     }
 
     @Test(description = "Adding new account")
@@ -65,7 +78,7 @@ public class AccountServiceTest {
         requestSpecification = SpecificationsUtils
                 .buildSecureRequest(token,"http://localhost:8000", "/account", ContentType.JSON, accountParams(accountParam), null);
 
-        Response response = requestSpecification.post();
+        response = requestSpecification.post();
 
         LogginReport.printRequestLogInReport(requestSpecification);
         LogginReport.printResponseLogInReport(response);
@@ -81,7 +94,7 @@ public class AccountServiceTest {
         requestSpecification = SpecificationsUtils
                 .buildSecureRequest(token,"http://localhost:8000", "/account/" + id, ContentType.JSON, accountParams(accountParam), null);
 
-        Response response = requestSpecification.put();
+        response = requestSpecification.put();
 
         LogginReport.printRequestLogInReport(requestSpecification);
         LogginReport.printResponseLogInReport(response);
@@ -95,7 +108,7 @@ public class AccountServiceTest {
         requestSpecification = SpecificationsUtils
                 .buildSecureRequest(token,"http://localhost:8000", "/account/" + id, ContentType.JSON, null, null);
 
-        Response response = requestSpecification.delete();
+        response = requestSpecification.delete();
 
         LogginReport.printRequestLogInReport(requestSpecification);
         LogginReport.printResponseLogInReport(response);
