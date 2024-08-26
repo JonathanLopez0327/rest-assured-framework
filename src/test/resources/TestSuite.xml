@@ -14,7 +14,7 @@
         <classes>
             <class name="org.framework.trackingservice.accounts.AccountServiceTest">
                 <methods>
-                    <include name="delete_account" />
+                    <include name="get_all_accounts" />
                 </methods>
             </class>
         </classes>
