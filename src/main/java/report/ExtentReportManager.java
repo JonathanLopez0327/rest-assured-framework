@@ -1,4 +1,4 @@
-package org.framework.report;
+package report;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.markuputils.CodeLanguage;
@@ -37,8 +37,7 @@ public class ExtentReportManager {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
         LocalDateTime localDateTime = LocalDateTime.now();
         String timeStamp = dateTimeFormatter.format(localDateTime);
-        String reportName = "Test-Report-" + timeStamp + ".html";
-        return reportName;
+        return "Test-Report-" + timeStamp + ".html";
     }
 
     public static void logPassDetails(String log) {

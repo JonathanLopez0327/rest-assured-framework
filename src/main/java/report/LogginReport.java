@@ -1,4 +1,4 @@
-package org.framework.report;
+package report;
 
 import io.restassured.response.Response;
 import io.restassured.specification.QueryableRequestSpecification;
@@ -19,15 +19,18 @@ public class LogginReport {
         return instance;
     }
 
+    private LogginReport() {
+    }
+
     public static void printRequestLogInReport(RequestSpecification requestSpecification) {
         QueryableRequestSpecification queryableRequestSpecification = SpecificationQuerier.query(requestSpecification);
         ExtentReportManager.logInfoDetails("Endpoint is: " + "<span id='uniqueValue'>" + queryableRequestSpecification.getBaseUri() + queryableRequestSpecification.getBasePath() + "</span>");
-        ExtentReportManager.logInfoDetails("Method is: " + "<span id='uniqueValue'>" + queryableRequestSpecification.getMethod()+ "</span>");
+        ExtentReportManager.logInfoDetails("Method is: " + "<span id='uniqueValue'>" + queryableRequestSpecification.getMethod() + "</span>");
 
         StringBuilder headersInfo = new StringBuilder("Request Headers: <br>");
-        queryableRequestSpecification.getHeaders().asList().forEach(header -> {
-            headersInfo.append("<span id='uniqueName'>").append(header.getName()).append("</span>: <span id='uniqueValue'>").append(header.getValue()).append("</span><br>");
-        });
+        queryableRequestSpecification.getHeaders().asList().forEach(header ->
+                headersInfo.append("<span id='uniqueName'>").append(header.getName()).append("</span>: <span id='uniqueValue'>").append(header.getValue()).append("</span><br>")
+        );
         ExtentReportManager.logInfoDetails(headersInfo.toString());
 
         if (queryableRequestSpecification.getBody() != null) {
@@ -40,9 +43,9 @@ public class LogginReport {
         ExtentReportManager.logInfoDetails(RESPONSE_STATUS_IS + response.getStatusCode());
 
         StringBuilder headersInfo = new StringBuilder("Response Headers: <br>");
-        response.getHeaders().asList().forEach(header -> {
-            headersInfo.append("<span id='uniqueName'>").append(header.getName()).append("</span>: <span id='uniqueValue'>").append(header.getValue()).append("</span><br>");
-        });
+        response.getHeaders().asList().forEach(header ->
+                headersInfo.append("<span id='uniqueName'>").append(header.getName()).append("</span>: <span id='uniqueValue'>").append(header.getValue()).append("</span><br>")
+        );
         ExtentReportManager.logInfoDetails(headersInfo.toString());
 
         ExtentReportManager.logInfoDetails(RESPONSE_BODY_IS);
