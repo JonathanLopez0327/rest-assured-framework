@@ -1,5 +1,8 @@
-package org.framework.utils;
+package utils;
 
+import lombok.Getter;
+
+@Getter
 public enum Protocols {
     SSL("SSL"),
     TLS("TLS");
@@ -10,7 +13,4 @@ public enum Protocols {
         this.protocolName = protocolName;
     }
 
-    public String getProtocolName() {
-        return this.protocolName;
-    }
 }

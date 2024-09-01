@@ -1,4 +1,4 @@
-package org.framework.report;
+package report;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
